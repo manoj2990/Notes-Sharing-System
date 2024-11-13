@@ -8,7 +8,7 @@ export const fetchNotes = createAsyncThunk('notes/fetchNotes', async (_,{ reject
   
     try {
       
-    const response = await axios.get('http://localhost:4000/api/v1/user/getNotes');
+    const response = await axios.get('https://notes-sharing-system-ruby.vercel.app/api/v1/user/getNotes');
   
     return response.data.notes; 
     } catch (error) {

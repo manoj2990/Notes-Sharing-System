@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:4000/api/v1/', 
+  baseURL: 'https://notes-sharing-system-ruby.vercel.app/api/v1/', 
   withCredentials: true,
 });
 

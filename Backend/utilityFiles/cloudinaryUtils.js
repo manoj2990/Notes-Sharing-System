@@ -121,7 +121,7 @@ const deleteFromCloudinary = async (publicId) => {
               return false;
           }
   
-          const response = await cloudinary.uploader.destroy(publicId, { resource_type: 'auto'});
+          const response = await cloudinary.uploader.destroy(publicId, { resource_type: 'auto',});
           console.log("deleteFromCloudinary-Respose =>", response)
           if (response.result !== 'ok') {
               console.error("Failed to delete file from Cloudinary");
@@ -138,19 +138,30 @@ const deleteFromCloudinary = async (publicId) => {
   };
   
   // Helper function to get PublicId from URL
-  const extractPublicIdFromUrl = (url) => {
-    console.log("url =>", url)
-      const parts = url.split('/');
-      console.log("url =>", parts)
-      const fileName = parts[parts.length - 1];
-      console.log("url =>", fileName)
-      const filefolder = parts[parts.length - 2];
-      console.log("url =>", filefolder)
-      const publicId = filefolder + "/" + fileName;
+  // const extractPublicIdFromUrl = (url) => {
+  //   console.log("url =>", url)
+  //     const parts = url.split('/');
+  //     console.log("url =>", parts)
+  //     const fileName = parts[parts.length - 1];
+  //     console.log("url =>", fileName)
+  //     const filefolder = parts[parts.length - 2];
+  //     console.log("url =>", filefolder)
+  //     const publicId = filefolder + "/" + fileName;
       
-      return publicId;
-  };
+  //     return publicId;
+  // };
 
+
+  const extractPublicIdFromUrl = (url) => {
+    const parts = url.split('/');
+    const fileName = parts[parts.length - 1].split('.')[0]; // Remove file extension
+    const fileFolder = parts[parts.length - 2];
+    const publicId = `${fileFolder}/${fileName}`;
+    
+    console.log("Extracted public ID:", publicId); // Log the extracted public ID for debugging
+    return publicId;
+  };
+  
 module.exports = { 
   uploadOnCloudinary,
   deleteFromCloudinary,

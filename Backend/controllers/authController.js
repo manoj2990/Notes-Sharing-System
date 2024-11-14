@@ -157,12 +157,19 @@ exports.login = async (req, res) => {
     const notes = await NoteModel.find({ uploadedBy: user._id });
     userData.notes = notes;
 
-    res.cookie('token', token, { httpOnly: true, maxAge: 15 * 24 * 60 * 60 * 1000 })
-      .status(200).json({ 
-        success: true, 
-        message: 'Login successful',
-        User: userData
-       });
+    res.cookie('token', token, { 
+      httpOnly: true, 
+      maxAge: 15 * 24 * 60 * 60 * 1000,
+      sameSite: 'None', 
+      secure: process.env.NODE_ENV === 'production' 
+    })
+    .status(200).json({ 
+      success: true, 
+      message: 'Login successful',
+      User: userData
+    });
+    
+    
   } catch (err) {
     console.error('Login error:', err.message);
     res.status(500).json({ success: false, message: 'Login failed' });

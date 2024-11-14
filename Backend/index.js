@@ -23,9 +23,13 @@ app.use(cors({
 }));
 
 app.set('trust proxy', 1);
+app.use((req, res, next) => {
+  console.log("Request Headers:", req.headers);
+  next();
+});
 
 
-app.options('*', cors());  
+
 
 
 app.use(express.json());

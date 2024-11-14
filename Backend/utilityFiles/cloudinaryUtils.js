@@ -86,7 +86,9 @@
 
 
 
-const cloudinary = require('cloudinary').v2;
+// const cloudinary = require('cloudinary').v2;
+
+const { cloudinary } = require("../config/cloudinary");
 
 // Function to upload file to Cloudinary
 const uploadOnCloudinary = (fileBuffer) => {

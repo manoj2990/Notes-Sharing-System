@@ -95,9 +95,9 @@ const uploadOnCloudinary = (fileBuffer) => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload_stream(
       {
-        resource_type: "raw", // Automatically detect file type (PDF, DOCX, etc.)
+        resource_type: 'auto', // Automatically detect file type (PDF, DOCX, etc.)
         folder: 'NotesPdf',
-        allowed_formats: ['pdf', 'doc', 'docx']
+        allowed_formats: ['pdf', 'doc', 'docx'],
       },
       (error, result) => {
         if (error) {
@@ -121,7 +121,7 @@ const deleteFromCloudinary = async (publicId) => {
               return false;
           }
   
-          const response = await cloudinary.uploader.destroy(publicId, { resource_type: "raw" });
+          const response = await cloudinary.uploader.destroy(publicId, { resource_type: 'auto'});
           console.log("deleteFromCloudinary-Respose =>", response)
           if (response.result !== 'ok') {
               console.error("Failed to delete file from Cloudinary");

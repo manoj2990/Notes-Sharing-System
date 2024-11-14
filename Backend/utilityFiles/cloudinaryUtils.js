@@ -95,7 +95,7 @@ const uploadOnCloudinary = (fileBuffer) => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload_stream(
       {
-        resource_type: 'auto', // Automatically detect file type (PDF, DOCX, etc.)
+        resource_type: "raw", // Automatically detect file type (PDF, DOCX, etc.)
       },
       (error, result) => {
         if (error) {
@@ -108,6 +108,46 @@ const uploadOnCloudinary = (fileBuffer) => {
   });
 };
 
-module.exports = { uploadOnCloudinary };
+
+
+
+const deleteFromCloudinary = async (publicId) => {
+      try {
+          if (!publicId) {
+              console.error("publicId is not found!");
+              return false;
+          }
+  
+          const response = await cloudinary.uploader.destroy(publicId, { resource_type: "raw" });
+          
+          if (response.result !== 'ok') {
+              console.error("Failed to delete file from Cloudinary");
+              return false;
+          }
+  
+          
+          return true;
+  
+      } catch (error) {
+          console.error("Error deleting file from Cloudinary:", error.message);
+          return false;
+      }
+  };
+  
+  // Helper function to get PublicId from URL
+  const extractPublicIdFromUrl = (url) => {
+      const parts = url.split('/');
+      const fileName = parts[parts.length - 1];
+      const filefolder = parts[parts.length - 2];
+      const publicId = filefolder + "/" + fileName;
+      
+      return publicId;
+  };
+
+module.exports = { 
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+  extractPublicIdFromUrl
+ };
 
 

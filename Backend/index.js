@@ -1,7 +1,7 @@
 
 const express = require('express');
 const app = express();
-
+console.log("sucessfully reach to backend...")
 const connectDB = require('./config/db');
 const { cloudinaryConnect } = require("./config/cloudinary");
 const authRoutes = require('./routes/authRoutes');
@@ -24,7 +24,7 @@ app.use(cors({
 
 app.set('trust proxy', 1);
 app.use((req, res, next) => {
-  console.log("Request Headers:", req.headers);
+  console.log("Request Headers printing :", req.headers);
   next();
 });
 

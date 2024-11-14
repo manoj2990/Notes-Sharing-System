@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user');
 
 const authMiddleware = async (req, res, next) => {
+  console.log("present at middleware...")
   console.log("req.body =>", req.body)
   try {
     // Extract token from the request (body, cookies, or Authorization header)
@@ -39,6 +40,7 @@ const authMiddleware = async (req, res, next) => {
     console.log("Authenticated user:", req.user);
 
     // Proceed to the next middleware or route
+    console.log("Proceed to the next middleware or route...")
     next();
 
   } catch (err) {

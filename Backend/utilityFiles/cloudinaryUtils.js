@@ -121,7 +121,7 @@ const deleteFromCloudinary = async (publicId) => {
               return false;
           }
   
-          const response = await cloudinary.uploader.destroy(publicId, { resource_type: 'auto',});
+          const response = await cloudinary.uploader.destroy(publicId, { resource_type: 'raw',});
           console.log("deleteFromCloudinary-Respose =>", response)
           if (response.result !== 'ok') {
               console.error("Failed to delete file from Cloudinary");
@@ -161,7 +161,7 @@ const deleteFromCloudinary = async (publicId) => {
     console.log("Extracted public ID:", publicId); // Log the extracted public ID for debugging
     return publicId;
   };
-  
+
 module.exports = { 
   uploadOnCloudinary,
   deleteFromCloudinary,

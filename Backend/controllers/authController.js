@@ -161,7 +161,8 @@ exports.login = async (req, res) => {
       httpOnly: true, 
       maxAge: 15 * 24 * 60 * 60 * 1000,
       sameSite: 'None', 
-      secure: process.env.NODE_ENV === 'production' 
+      secure: process.env.NODE_ENV === 'production' ,
+      path: '/'
     })
     .status(200).json({ 
       success: true, 

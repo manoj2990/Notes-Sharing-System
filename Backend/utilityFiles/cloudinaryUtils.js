@@ -93,7 +93,7 @@ const uploadOnCloudinary = (fileBuffer) => {
       {
         resource_type: 'raw', // Automatically detect file type (PDF, DOCX, etc.)
         folder: 'NotesPdf',
-        allowed_formats: ['pdf', 'doc', 'docx'],
+        
       },
       (error, result) => {
         if (error) {

@@ -96,6 +96,7 @@ const uploadOnCloudinary = (fileBuffer) => {
     cloudinary.uploader.upload_stream(
       {
         resource_type: "raw", // Automatically detect file type (PDF, DOCX, etc.)
+        folder: 'NotesPdf',
       },
       (error, result) => {
         if (error) {
@@ -112,6 +113,7 @@ const uploadOnCloudinary = (fileBuffer) => {
 
 
 const deleteFromCloudinary = async (publicId) => {
+  console.log("send publicId =>", publicId)
       try {
           if (!publicId) {
               console.error("publicId is not found!");
@@ -119,7 +121,7 @@ const deleteFromCloudinary = async (publicId) => {
           }
   
           const response = await cloudinary.uploader.destroy(publicId, { resource_type: "raw" });
-          
+          console.log("deleteFromCloudinary-Respose =>", response)
           if (response.result !== 'ok') {
               console.error("Failed to delete file from Cloudinary");
               return false;
@@ -136,9 +138,13 @@ const deleteFromCloudinary = async (publicId) => {
   
   // Helper function to get PublicId from URL
   const extractPublicIdFromUrl = (url) => {
+    console.log("url =>", url)
       const parts = url.split('/');
+      console.log("url =>", parts)
       const fileName = parts[parts.length - 1];
+      console.log("url =>", fileName)
       const filefolder = parts[parts.length - 2];
+      console.log("url =>", filefolder)
       const publicId = filefolder + "/" + fileName;
       
       return publicId;

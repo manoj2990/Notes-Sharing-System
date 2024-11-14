@@ -59,34 +59,30 @@ const { deleteFromCloudinary, extractPublicIdFromUrl } = require("../utilityFile
 
 
 exports.uploadNote = async (req, res) => {
-  console.log("entering into uplodeNote controller....")
+
   try {
     if (!req.file) {
-      console.log("No file found in the request.");
+      
       return res.status(400).json({ message: 'No file uploaded.' });
     }
 
-    console.log("File received:", req.file.originalname);
-    console.log("File size:", req.file.size);
-    console.log("File MIME type:", req.file.mimetype);
+   
 
     const { subject, forClass, unit, semester, fileSize, documentType } = req.body;
     const uploadedBy = req.user?.id;
-    console.log("User ID from token:", uploadedBy);
-
     const fileType = req.file?.originalname.split('.')[1];
-    console.log("File type detected:", fileType);
+   
 
     // Pass the buffer directly to Cloudinary for upload
     const cloudinaryResponse = await uploadOnCloudinary(req.file.buffer); // Change to req.file.buffer
-    console.log("Cloudinary response:", cloudinaryResponse);
+    
 
     if (!cloudinaryResponse) {
-      console.error("File upload to Cloudinary failed.");
+      
       return res.status(500).json({ message: 'File upload to Cloudinary failed.' });
     }
 
-    console.log("Saving note to database...");
+   
     const newNote = new NotesModel({
       subject,
       forClass,
@@ -100,7 +96,7 @@ exports.uploadNote = async (req, res) => {
     });
 
     await newNote.save();
-    console.log("Note saved successfully:", newNote);
+    
     
     return res.status(201).json({
       message: 'Note uploaded successfully!',
@@ -123,7 +119,7 @@ exports.uploadNote = async (req, res) => {
 exports.deleteNote = async (req, res) => {
   try {
    
-
+    console.log("entering into deleteNote")
     const note = await NotesModel.findById(req.params.id);
   
     if (!note) {
@@ -140,21 +136,21 @@ exports.deleteNote = async (req, res) => {
 
    
     const publicId = extractPublicIdFromUrl(note.file);
-   
+   console.log("publicId of file =>", publicId)
     if (!publicId) {
       return res.status(500).json({ success: false, msg: 'Error extracting file ID' });
     }
 
 
     const deleteResponse = await deleteFromCloudinary(publicId);
-    
+    console.log("deleteResponse =>", deleteResponse)
     if (!deleteResponse) {
       return res.status(500).json({ success: false, msg: 'Failed to delete file from Cloudinary' });
     }
    
 
     await NotesModel.findByIdAndDelete(req.params.id);
-    
+    console.log("succesfully delete from db")
 
   
     res.status(200).json({

@@ -22,6 +22,8 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 }));
 
+app.set('trust proxy', 1);
+
 
 app.options('*', cors());  
 

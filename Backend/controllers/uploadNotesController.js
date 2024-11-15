@@ -82,7 +82,16 @@ exports.uploadNote = async (req, res) => {
       return res.status(500).json({ message: 'File upload to Cloudinary failed.' });
     }
 
-    const fileUrl = cloudinaryResponse.secure_url;
+    let modifiedFileUrl = fileUrl;
+
+    if (fileType === 'pdf') {
+      // If PDF, return the direct URL
+      console.log("Directly open PDF:", fileUrl);
+    } else {
+      // For non-PDF files, use Google Docs Viewer
+      modifiedFileUrl = `https://docs.google.com/gview?url=${encodeURIComponent(fileUrl)}&embedded=true`;
+      console.log("Use Google Docs viewer for non-PDF files:", modifiedFileUrl);
+    }
    
     const newNote = new NotesModel({
       subject,
@@ -92,7 +101,7 @@ exports.uploadNote = async (req, res) => {
       fileSize,
       fileType,
       documentType,
-      file: fileUrl, // Save Cloudinary URL in DB
+      file: modifiedFileUrl, // Save Cloudinary URL in DB
       uploadedBy,
     });
 

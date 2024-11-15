@@ -82,6 +82,10 @@ exports.uploadNote = async (req, res) => {
       return res.status(500).json({ message: 'File upload to Cloudinary failed.' });
     }
 
+    console.log("cloudinaryResponse =>", cloudinaryResponse)
+    const fileUrl = cloudinaryResponse.url;
+
+    
     let modifiedFileUrl = fileUrl;
 
     if (fileType === 'pdf') {

@@ -88,6 +88,7 @@ const { cloudinary } = require("../config/cloudinary");
 
 
 const uploadOnCloudinary = (fileBuffer, filename) => {
+  console.log("fileBuffer =>", fileBuffer)
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload_stream(
       {

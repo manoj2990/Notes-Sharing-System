@@ -86,16 +86,25 @@
 
 const { cloudinary } = require("../config/cloudinary");
 
+const sanitizeFilename = (filename) => {
+  return filename.replace(/[^a-zA-Z0-9-_\.]/g, '_'); // Replace invalid characters with underscores
+};
 
 const uploadOnCloudinary = (fileBuffer, filename) => {
   console.log("fileBuffer =>", fileBuffer)
+  console.log('File details before upload:', {
+    mimetype: req.file.mimetype,
+    originalname: req.file.originalname,
+  });
+  
   return new Promise((resolve, reject) => {
+    const sanitizedFilename = sanitizeFilename(filename);
     cloudinary.uploader.upload_stream(
       {
         resource_type: 'raw', 
         folder: 'NotesPdf',
         allowed_formats: ['pdf', 'doc', 'docx'],
-        public_id: filename,
+        public_id: sanitizedFilename,
       },
       (error, result) => {
         if (error) {

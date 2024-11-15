@@ -57,6 +57,10 @@ const upload = multer({
       file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     ) {
       console.log('File type is allowed:', file.mimetype); 
+      console.log('File details before upload:', {
+        mimetype: req.file.mimetype,
+        originalname: req.file.originalname,
+      });
       cb(null, true); // Accept the file
     } else {
       console.error('Invalid file type:', file.mimetype);

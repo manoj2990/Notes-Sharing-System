@@ -92,10 +92,7 @@ const sanitizeFilename = (filename) => {
 
 const uploadOnCloudinary = (fileBuffer, filename) => {
   console.log("fileBuffer =>", fileBuffer)
-  console.log('File details before upload:', {
-    mimetype: req.file.mimetype,
-    originalname: req.file.originalname,
-  });
+  
   
   return new Promise((resolve, reject) => {
     const sanitizedFilename = sanitizeFilename(filename);

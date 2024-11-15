@@ -91,7 +91,7 @@ const uploadOnCloudinary = (fileBuffer) => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload_stream(
       {
-        resource_type: 'auto', 
+        resource_type: 'raw', 
         folder: 'NotesPdf',
         allowed_formats: ['pdf', 'doc', 'docx'],
         

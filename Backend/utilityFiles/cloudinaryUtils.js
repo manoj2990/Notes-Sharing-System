@@ -145,12 +145,22 @@ const deleteFromCloudinary = async (publicId) => {
 };
 
 
+
 // const extractPublicIdFromUrl = (url) => {
 //   try {
+
+    
+//     // Split the URL into parts
 //     const parts = url.split('/');
-//     const fileName = parts[parts.length - 1].split('.')[0]; 
-//     const fileFolder = parts[parts.length - 2];
-//     const publicId = `${fileFolder}/${fileName}`;
+
+//     // Decode the filename and folder
+//     const encodedFileName = parts[parts.length - 1]; // e.g., "Backend%2BRoadmap.pdf"
+//     const decodedFileName = decodeURIComponent(encodedFileName); // Decoded: "Backend+Roadmap.pdf"
+  
+//     const fileFolder = decodeURIComponent(parts[parts.length - 2]); // e.g., "NotesPdf"
+
+//     // Construct the public_id with the folder and file name
+//     const publicId = `${fileFolder}/${decodedFileName}`;
     
 //     console.log("Extracted public ID:", publicId);
 //     return publicId;
@@ -160,21 +170,30 @@ const deleteFromCloudinary = async (publicId) => {
 //   }
 // };
 
-
 const extractPublicIdFromUrl = (url) => {
   try {
-    // Split the URL into parts
-    const parts = url.split('/');
+    let publicId = null;
 
-    // Decode the filename and folder
-    const encodedFileName = parts[parts.length - 1]; // e.g., "Backend%2BRoadmap.pdf"
-    const decodedFileName = decodeURIComponent(encodedFileName); // Decoded: "Backend+Roadmap.pdf"
-  
+    if (url.includes("docs.google.com/gview")) {
+      // Extract the `url` parameter from the Google Docs URL
+      const urlParams = new URLSearchParams(new URL(url).search);
+      const embeddedUrl = urlParams.get("url");
+      
+      if (embeddedUrl) {
+        // Decode the embedded URL and treat it like a Cloudinary URL
+        url = decodeURIComponent(embeddedUrl);
+      }
+    }
+
+    // Handle Cloudinary URLs
+    const parts = url.split('/');
+    const encodedFileName = parts[parts.length - 1]; // e.g., "Backend_Roadmap.pdf"
+    const decodedFileName = decodeURIComponent(encodedFileName); // Decoded: "Backend_Roadmap.pdf"
     const fileFolder = decodeURIComponent(parts[parts.length - 2]); // e.g., "NotesPdf"
 
-    // Construct the public_id with the folder and file name
-    const publicId = `${fileFolder}/${decodedFileName}`;
-    
+    // Construct the public_id
+    publicId = `${fileFolder}/${decodedFileName}`;
+
     console.log("Extracted public ID:", publicId);
     return publicId;
   } catch (error) {

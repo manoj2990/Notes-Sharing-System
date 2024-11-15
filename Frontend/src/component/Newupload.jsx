@@ -8,7 +8,7 @@ import { fetchNotes } from '../redux/Slices/Notesslice';
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-hot-toast'; 
-const MAX_FILE_SIZE = 50 * 1024 * 1024; 
+const MAX_FILE_SIZE = 10 * 1024 * 1024; 
 
 const UploadNotes = () => {
   const dispatch = useDispatch();
@@ -52,7 +52,8 @@ const UploadNotes = () => {
       setErrorMsg('Please fill in all the fields.');
       return false;
     }
-    if (file.size || fileSize > MAX_FILE_SIZE) {
+    if ( file.size > MAX_FILE_SIZE) {
+      
       setErrorMsg('File size should be less than 10MB.');
       return false;
     }

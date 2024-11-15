@@ -1,14 +1,15 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from '../../Api/axiosInstance';
 
 
 //notes on 1 tme
-export const fetchNotes = createAsyncThunk('notes/fetchNotes', async (_,{ rejectWithValue }) => {
+export const fetchNotes = createAsyncThunk('notes/fetchNotes', 
+  async (_,{ rejectWithValue }) => {
   
     try {
       
-    const response = await axios.get('https://notes-sharing-system-ruby.vercel.app/api/v1/user/getNotes');
+    const response = await axiosInstance.get('user/getNotes');
   
     return response.data.notes; 
     } catch (error) {
@@ -23,7 +24,7 @@ export const fetchNotesBysearchQuery = createAsyncThunk(
   async (searchQuery, { rejectWithValue }) => {
     
       try {
-          const response = await axios.get(`http://localhost:4000/api/v1/user/notes?searchQuery=${searchQuery}`,{ withCredentials: true });
+          const response = await axiosInstance.get(`user/notes?searchQuery=${searchQuery}`,{ withCredentials: true });
           
           return response?.data.notes; 
           

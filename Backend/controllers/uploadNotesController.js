@@ -74,7 +74,7 @@ exports.uploadNote = async (req, res) => {
    
 
     // Pass the buffer directly to Cloudinary for upload
-    const cloudinaryResponse = await uploadOnCloudinary(req.file.buffer); // Change to req.file.buffer
+    const cloudinaryResponse = await uploadOnCloudinary(req.file.buffer, req.file.originalname); // Change to req.file.buffer
     
 
     if (!cloudinaryResponse) {

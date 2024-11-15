@@ -87,14 +87,14 @@
 const { cloudinary } = require("../config/cloudinary");
 
 
-const uploadOnCloudinary = (fileBuffer) => {
+const uploadOnCloudinary = (fileBuffer, filename) => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload_stream(
       {
         resource_type: 'raw', 
         folder: 'NotesPdf',
         allowed_formats: ['pdf', 'doc', 'docx'],
-        
+        public_id: filename
       },
       (error, result) => {
         if (error) {

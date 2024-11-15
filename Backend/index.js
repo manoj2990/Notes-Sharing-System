@@ -23,14 +23,6 @@ app.use(cors({
 }));
 
 app.set('trust proxy', 1);
-app.use((req, res, next) => {
-  console.log("Request Headers printing :", req.headers);
-  next();
-});
-
-
-
-
 
 app.use(express.json());
 app.use(cookieParser());

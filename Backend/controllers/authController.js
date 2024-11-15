@@ -109,7 +109,7 @@ exports.verifyOtp = async (req, res) => {
 // Resend OTP
 exports.resendOtp = async (req, res) => {
   const { email } = req.body;
-  console.log(`Resend OTP request for: ${email}`);
+  
   try {
     const user = await findUser(email);
     if (!user) {
@@ -139,7 +139,7 @@ exports.resendOtp = async (req, res) => {
 // Log in user
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(`Login attempt for: ${email}`);
+  
   try {
     const user = await findUser(email);
     if (!user || user.status !== 'verified') {
@@ -179,6 +179,6 @@ exports.login = async (req, res) => {
 
 // Log out user
 exports.logout = (req, res) => {
-  console.log('Logout request');
+  
   res.clearCookie('token').status(200).json({ message: 'Logout successful' });
 };

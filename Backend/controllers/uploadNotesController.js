@@ -6,58 +6,6 @@ const { deleteFromCloudinary, extractPublicIdFromUrl } = require("../utilityFile
 
 
 // uploade note
-// exports.uploadNote = async (req, res) => {
-//   try {
- 
-//     if (!req.file) {
-//       return res.status(400).json({ message: 'No file uploaded.' });
-//     }
-
-   
-//     const { subject, forClass, unit, semester, fileSize, documentType } = req.body;
-//     const uploadedBy = req.user?.id;
-//     const fileType =  req.file?.originalname.split('.')[1];
-   
-    
-//     const cloudinaryResponse = await uploadOnCloudinary(req.file?.path);
-//         if (!cloudinaryResponse) {
-//             return res.status(500).json({ message: "File upload to Cloudinary failed." });
-//         }
-
-  
-//     const newNote = new NotesModel({
-//       subject,
-//       forClass,
-//       unit,
-//       semester,
-//       fileSize,
-//       fileType,
-//       documentType,
-//       file: cloudinaryResponse.url, 
-//       uploadedBy,
-//     });
-
-    
-//     await newNote.save();
-
-    
-//     return res.status(201).json({
-//       message: 'Note uploaded successfully!',
-//       newNote,
-//     });
-//   } catch (error) {
-//     console.error('Upload error:', error);
-//     return res.status(401).json({ message: 'Internal server error.' });
-//   }
-// };
-
-
-
-
-
-
-
-
 exports.uploadNote = async (req, res) => {
 
   try {
@@ -82,7 +30,7 @@ exports.uploadNote = async (req, res) => {
       return res.status(500).json({ message: 'File upload to Cloudinary failed.' });
     }
 
-    console.log("cloudinaryResponse =>", cloudinaryResponse)
+    
     const fileUrl = cloudinaryResponse.url;
 
     
@@ -94,7 +42,7 @@ exports.uploadNote = async (req, res) => {
     } else {
       // For non-PDF files, use Google Docs Viewer
       modifiedFileUrl = `https://docs.google.com/gview?url=${encodeURIComponent(fileUrl)}&embedded=true`;
-      console.log("Use Google Docs viewer for non-PDF files:", modifiedFileUrl);
+      
     }
    
     const newNote = new NotesModel({

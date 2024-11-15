@@ -94,7 +94,7 @@ const uploadOnCloudinary = (fileBuffer, filename) => {
         resource_type: 'raw', 
         folder: 'NotesPdf',
         allowed_formats: ['pdf', 'doc', 'docx'],
-        public_id: filename
+        filename_override: filename
       },
       (error, result) => {
         if (error) {

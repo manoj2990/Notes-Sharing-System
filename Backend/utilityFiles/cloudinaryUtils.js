@@ -135,12 +135,35 @@ const deleteFromCloudinary = async (publicId) => {
 };
 
 
+// const extractPublicIdFromUrl = (url) => {
+//   try {
+//     const parts = url.split('/');
+//     const fileName = parts[parts.length - 1].split('.')[0]; 
+//     const fileFolder = parts[parts.length - 2];
+//     const publicId = `${fileFolder}/${fileName}`;
+    
+//     console.log("Extracted public ID:", publicId);
+//     return publicId;
+//   } catch (error) {
+//     console.error("Error extracting public ID from URL:", error.message);
+//     return null;
+//   }
+// };
+
+
 const extractPublicIdFromUrl = (url) => {
   try {
+    // Split the URL into parts
     const parts = url.split('/');
-    const fileName = parts[parts.length - 1].split('.')[0]; 
-    const fileFolder = parts[parts.length - 2];
-    const publicId = `${fileFolder}/${fileName}`;
+
+    // Decode the filename and folder
+    const encodedFileName = parts[parts.length - 1]; // e.g., "Backend%2BRoadmap.pdf"
+    const decodedFileName = decodeURIComponent(encodedFileName); // Decoded: "Backend+Roadmap.pdf"
+  
+    const fileFolder = decodeURIComponent(parts[parts.length - 2]); // e.g., "NotesPdf"
+
+    // Construct the public_id with the folder and file name
+    const publicId = `${fileFolder}/${decodedFileName}`;
     
     console.log("Extracted public ID:", publicId);
     return publicId;
@@ -149,6 +172,7 @@ const extractPublicIdFromUrl = (url) => {
     return null;
   }
 };
+
 
 module.exports = { 
   uploadOnCloudinary,

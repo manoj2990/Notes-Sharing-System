@@ -82,6 +82,7 @@ exports.uploadNote = async (req, res) => {
       return res.status(500).json({ message: 'File upload to Cloudinary failed.' });
     }
 
+    const fileUrl = cloudinaryResponse.secure_url;
    
     const newNote = new NotesModel({
       subject,
@@ -91,7 +92,7 @@ exports.uploadNote = async (req, res) => {
       fileSize,
       fileType,
       documentType,
-      file: cloudinaryResponse.url, // Save Cloudinary URL in DB
+      file: fileUrl, // Save Cloudinary URL in DB
       uploadedBy,
     });
 

@@ -58,8 +58,8 @@ const upload = multer({
     ) {
       console.log('File type is allowed:', file.mimetype); 
       console.log('File details before upload:', {
-        mimetype: req.file.mimetype,
-        originalname: req.file.originalname,
+        mimetype: file.mimetype,
+        originalname:file.originalname,
       });
       cb(null, true); // Accept the file
     } else {

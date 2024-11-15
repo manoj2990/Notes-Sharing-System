@@ -96,6 +96,7 @@ const uploadOnCloudinary = (fileBuffer, filename) => {
   
   return new Promise((resolve, reject) => {
     const sanitizedFilename = sanitizeFilename(filename);
+    console.log("sanitizedFilename =>", sanitizedFilename)
     cloudinary.uploader.upload_stream(
       {
         resource_type: 'raw', 

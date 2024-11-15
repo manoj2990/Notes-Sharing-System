@@ -91,7 +91,9 @@ const sanitizeFilename = (filename) => {
 };
 
 const uploadOnCloudinary = (fileBuffer, filename) => {
-  console.log("fileBuffer =>", fileBuffer)
+  console.log("File Buffer Length:", fileBuffer.length);
+console.log("First 10 Bytes of File Buffer:", fileBuffer.slice(0, 10));
+
   
   
   return new Promise((resolve, reject) => {
@@ -101,7 +103,7 @@ const uploadOnCloudinary = (fileBuffer, filename) => {
       {
         resource_type: 'raw', 
         folder: 'NotesPdf',
-        allowed_formats: ['pdf', 'doc', 'docx'],
+        
         public_id: sanitizedFilename,
       },
       (error, result) => {

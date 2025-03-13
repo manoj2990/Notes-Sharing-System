@@ -188,4 +188,5 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For queries, reach out to me at [LinkedIn] (https://www.linkedin.com/in/manoj-krumar/)
+For queries, reach out to me at
+ [LinkedIn](https://www.linkedin.com/in/manoj-krumar/)
